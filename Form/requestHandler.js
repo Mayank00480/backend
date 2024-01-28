@@ -22,6 +22,7 @@ function requestHandler(req , res){
              req.on('data',(chunk) => {
                  body.push(chunk);
              })
+             
              req.on('end',()=>{
                  const parsedData = Buffer.concat(body).toString();
                  const realData = parsedData.split('=')[1];
