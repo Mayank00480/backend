@@ -1,17 +1,31 @@
 const http = require('http')
-const express = require('express')
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use((req , res, next) => {
-    console.log("middleware 1")
-    next();
+app.use(bodyParser.urlencoded({extended:false}))
+app.use('/add-product', (req,res,next) => {
+    res.send('<form action = "/product" method = "POST"> <input type = "text" name = "userName"> <input type = "text" name = "password">  <button>Send </button></form> ' )
 })
 
-app.use((req,res,next) => {
-    console.log("middleware 2");
-    res.send('<h1>Hello World </h1>')
+app.post('/product' ,(req,res,next) => {
+    const obj = req.body;
+    for(let key in obj){
+        console.log(obj[key])
+    }
+    res.redirect('/')
 })
+
+app.use('/',(req , res, next) => {
+    res.send('<h1>Hello From Express</h1>')
+    
+})
+
+// app.use((req,res,next) => {
+//     console.log("middleware 2");
+//     res.send('<h1>Hello World </h1>')
+// })
 
 app.listen(3000);
 //const fs = require('fs');
